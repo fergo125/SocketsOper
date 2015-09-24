@@ -8,7 +8,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
-
+#include <strings.h>
 
 
 class Socket
@@ -22,7 +22,8 @@ class Socket
 		Socket(char c, bool b = false);
 		~Socket();
 		Socket * Accept();
-		int Connect(char * host, int port);
+		int Connect1(char * host, int port);
+		int Connect2(char * hostname, int port);
 		int Read(char * text, int len);
 		int Write(char * text, int len);
 		int Shutdown( int i);

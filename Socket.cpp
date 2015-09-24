@@ -33,10 +33,21 @@ int Socket::Close(){
 	return close(numeroSocket);
 }
 	
-int Socket::Connect(char* host, int port){
+int Socket::Connect1(char* host, int port){
 	struct sockaddr_in host_addr;
     host_addr.sin_family = AF_INET;
 	inet_aton( host,  &host_addr.sin_addr );
+	host_addr.sin_port = htons( port );
+	int len = sizeof( host_addr );
+	return connect( numeroSocket, (sockaddr *) & host_addr, len );
+}
+
+int Socket::Connect2(char* hostname, int port){
+	struct sockaddr_in host_addr;
+    hostent * host = gethostbyname(hostname);
+    host_addr.sin_family = AF_INET;		
+	bcopy ( host->h_addr, &(host_addr.sin_addr.s_addr), host->h_length);
+	//host_addr.sin_addr = host->h_addr_list[0];
 	host_addr.sin_port = htons( port );
 	int len = sizeof( host_addr );
 	return connect( numeroSocket, (sockaddr *) & host_addr, len );
